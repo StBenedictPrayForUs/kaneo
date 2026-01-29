@@ -7,6 +7,7 @@ import "@/index.css";
 import { useAuth } from "@/components/providers/auth-provider/hooks/use-auth";
 import { KeyboardShortcutsHelp } from "./components/keyboard-shortcuts-help";
 import AuthProvider from "./components/providers/auth-provider";
+import { SSEProvider } from "./components/providers/sse-provider";
 import { ThemeProvider } from "./components/providers/theme-provider";
 import { KeyboardShortcutsProvider } from "./hooks/use-keyboard-shortcuts";
 import { routeTree } from "./routeTree.gen";
@@ -62,10 +63,12 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <AuthProvider>
-            <KeyboardShortcutsProvider>
-              <App />
-              <KeyboardShortcutsHelp />
-            </KeyboardShortcutsProvider>
+            <SSEProvider>
+              <KeyboardShortcutsProvider>
+                <App />
+                <KeyboardShortcutsHelp />
+              </KeyboardShortcutsProvider>
+            </SSEProvider>
           </AuthProvider>
         </ThemeProvider>
       </QueryClientProvider>

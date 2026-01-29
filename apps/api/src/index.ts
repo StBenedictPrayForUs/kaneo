@@ -21,6 +21,7 @@ import { migrateGitHubIntegration } from "./plugins/github/migration";
 import project from "./project";
 import { getPublicProject } from "./project/controllers/get-public-project";
 import search from "./search";
+import sse from "./sse";
 import task from "./task";
 import timeEntry from "./time-entry";
 import { getInvitationDetails } from "./utils/check-registration-allowed";
@@ -93,6 +94,9 @@ const invitationPublicApi = api.get("/invitation/public/:id", async (c) => {
   const result = await getInvitationDetails(id);
   return c.json(result);
 });
+
+// SSE endpoint for real-time updates (handles its own auth)
+const sseApi = api.route("/sse", sse);
 
 const configApi = api.route("/config", config);
 
@@ -234,6 +238,7 @@ export type AppType =
   | typeof githubIntegrationApi
   | typeof externalLinkApi
   | typeof invitationApi
-  | typeof invitationPublicApi;
+  | typeof invitationPublicApi
+  | typeof sseApi;
 
 export default app;
